@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.441.0",
     "@clerk/nextjs": "^4.26.2",
     "@neondatabase/serverless": "^0.6.0",
     "@radix-ui/react-slot": "^1.0.2",
@@ -23,6 +24,8 @@
     "pg": "^8.11.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-dropzone": "^14.2.3",
+    "react-hot-toast": "^2.4.1",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7"
   },
