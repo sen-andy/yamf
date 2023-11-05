@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { auth, UserButton } from '@clerk/nextjs'
 import { ArrowBigLeftDash, LogIn } from 'lucide-react'
-import ImageUpload from '@/components/ImageUpload'
+import TicketForm from '@/components/TicketForm'
 import Link from 'next/link'
 
 export default async function Home() {
@@ -14,7 +14,7 @@ export default async function Home() {
         <ArrowBigLeftDash />
         { isAuth ? <UserButton afterSignOutUrl='/' /> : <Link href='/sign-in'><Button>Sign In<LogIn className='h-4' /></Button></Link>}
       </nav>
-      <ImageUpload />
+      <TicketForm />
     </main>
   )
 }

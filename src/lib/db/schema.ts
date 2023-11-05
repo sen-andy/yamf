@@ -1,6 +1,6 @@
 import { pgTable, pgEnum, serial, text, boolean, jsonb, integer, timestamp  } from 'drizzle-orm/pg-core'
 
-export const ticketStatus = pgEnum('ticket_status',['open', 'pending', 'unrepairable', 'done'])
+export const ticketStatus = pgEnum('ticket_status',['open', 'pending', 'unrepairable', 'closed'])
 export const systemUser = pgEnum('system_user', ['admin', 'agent'])
 
 export const admins = pgTable('admins', {

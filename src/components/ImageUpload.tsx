@@ -2,9 +2,12 @@
 import { useDropzone } from 'react-dropzone'
 import { Inbox } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { getS3Url, uploadToS3 } from '@/lib/s3'
 
-const ImageUpload = () => {
+type Props = {
+	setImage: React.Dispatch<React.SetStateAction<File>>
+}
+
+const ImageUpload = ({ setImage }: Props) => {
 	const { getRootProps, getInputProps } = useDropzone({
 		maxFiles: 1,
 		accept: { 'image/*': ['.jpeg', '.jpg', '.png', '.webp'] },
@@ -14,24 +17,19 @@ const ImageUpload = () => {
 				return
 			}
 			const file = acceptedFiles[0]
-			if (file.size > 8 *  1024 * 1024) {
+			if (file.size > 10 *  1024 * 1024) {
 				toast.error('10mb limit')
 				return
 			}
-			try {
-				const data = await uploadToS3(file)
-				console.log('data', data)
-				console.log(getS3Url(data?.file_key!))
-			} catch (err) {
-				console.error(err)
-			}
+			setImage(file)
 		}
 	})
+
   return (
-    <div className='p-2 bg-white rounded-xl'>
+    <div className='bg-white w-full h-full rounded-xl'>
 			<div
 				{...getRootProps({
-						className: 'border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 flex justify-center items-center'
+						className: 'h-full border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 flex justify-center items-center'
 					})}>
 				<input {...getInputProps()} />
 				<>
