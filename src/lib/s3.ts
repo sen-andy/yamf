@@ -25,8 +25,7 @@ export const uploadToS3 = async (file: File) => {
         console.log('s3 status', res.$metadata.httpStatusCode);
 
         return Promise.resolve({
-            file_key,
-            file_name: file.name
+            imageUrl: getS3Url(file_key)
         })
     } catch (err) {
         console.error(err)

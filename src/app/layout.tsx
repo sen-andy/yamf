@@ -1,9 +1,14 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
+import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Toaster } from 'react-hot-toast'
 import Providers from '@/components/Providers'
+
+import { Button } from '@/components/ui/button'
+import { auth, UserButton } from '@clerk/nextjs'
+import { ArrowBigLeftDash, LogIn } from 'lucide-react'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,11 +22,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const { userId } = auth()
+  const isAuth = !!userId
   return (
     <ClerkProvider>
         <Providers>
           <html lang="en">
-            <body className={inter.className}>
+          <body className={`${inter.className} bg-slate-50`}>
+              <nav className='sticky bg-orange-300 top-0 left-0 h-16 w-full flex items-center'>
+                <div className='container flex justify-between items-center'>
+                  <ArrowBigLeftDash />
+                  { isAuth ? <UserButton afterSignOutUrl='/' /> : <Link href='/sign-in'><Button>Sign In<LogIn className='h-4' /></Button></Link>}
+                </div>
+              </nav>
               {children}
               <Toaster position='top-right' />
             </body>

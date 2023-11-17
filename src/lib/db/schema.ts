@@ -2,6 +2,7 @@ import { pgTable, pgEnum, serial, text, boolean, jsonb, integer, timestamp  } fr
 
 export const ticketStatus = pgEnum('ticket_status',['open', 'pending', 'unrepairable', 'closed'])
 export const systemUser = pgEnum('system_user', ['admin', 'agent'])
+export const deviceType = pgEnum('device_type', ['mobile', 'computer'])
 
 export const admins = pgTable('admins', {
     id: serial('id').primaryKey(),
@@ -11,33 +12,31 @@ export const admins = pgTable('admins', {
 
 export const tickets = pgTable('tickets', {
     id: serial('id').primaryKey(),
-    userId: integer('user_id').references(() => users.id),
-    deviceId: integer('device_id').references(() => devices.id).notNull(),
+    user_name: integer('user_name').references(() => users.username),
+    device_serial: integer('device_serial').references(() => devices.serial).notNull(),
     incident: text('incident').default('log'),
     description: text('description').notNull(),
-    imgUrl: text('img_url'),
+    imageUrl: text('image_url'),
     status: ticketStatus('status').default('open'),
-    comments: text('comments').array(),
+    comments: text('comments').array().default([]),
     createdAt: timestamp('createdAt').defaultNow(),
     updatedAt: timestamp('updatedAt').defaultNow()
 })
 
 export const users = pgTable('users', {
-    id: serial('id').primaryKey(),
+    username: serial('username').primaryKey(),
     jamfId: text('jamf_id'),
     firstName: text('first_name').notNull(),
+    middleName: text('middle_name'),
     lastName: text('last_name').notNull(),
-    location: text('location'),
-    grade: integer('grade').notNull(),
-    insurance: boolean('insurance').default(false),
+    grade: integer('grade'),
     createdAt: timestamp('createdAt').defaultNow()
 })
 
 export const devices = pgTable('devices', {
-    id: serial('id').primaryKey(),
+    serial: serial('serial').primaryKey(),
     jamfId: text('jamf_id'),
-    serialNumber: text('serial_number').unique().notNull(),
     model: text('model'),
-    type: text('type').notNull(),
+    type: deviceType('type').default('mobile').notNull(),
     createdAt: timestamp('createdAt').defaultNow()
 })

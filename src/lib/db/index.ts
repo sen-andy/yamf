@@ -6,5 +6,5 @@ if (!DATABASE_URL) throw Error('database url does not exist')
 neonConfig.fetchConnectionCache = true
 
 const sql = neon(DATABASE_URL)
-const db = drizzle(sql)
+export const db = drizzle(sql)
 
